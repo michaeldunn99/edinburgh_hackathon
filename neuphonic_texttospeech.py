@@ -1,9 +1,18 @@
 from pyneuphonic import Neuphonic, AudioPlayer, TTSConfig
 import time
+from dotenv import load_dotenv
+import os
 
+# Load environment variables from .env file
+load_dotenv()
 
 def neuphonic_tts(input_text):
-    client = Neuphonic(api_key="your_api_key")
+    # Retrieve the API key from environment variables
+    api_key = os.getenv("NEUPHONIC_API_KEY")
+    if not api_key:
+        raise ValueError("API key not found. Please set NEUPHONIC_API_KEY in your .env file.")
+
+    client = Neuphonic(api_key=api_key)
 
     sse = client.tts.SSEClient()
 
